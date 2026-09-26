@@ -32,6 +32,11 @@ export class FrameSequence {
     return null;
   }
 
+  // Frame exato, só se já carregou.
+  get(index: number): HTMLImageElement | null {
+    return this.images[index] ?? null;
+  }
+
   destroy() {
     this.destroyed = true;
     this.queue = [];
@@ -85,4 +90,25 @@ export function drawCover(ctx: CanvasRenderingContext2D, img: HTMLImageElement) 
   const w = img.naturalWidth * scale;
   const h = img.naturalHeight * scale;
   ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+}
+
+// Desenha a posição fracionária `frame` da sequência. Entre dois frames carregados, funde o
+// seguinte por cima com opacidade proporcional: o scrub suavizado do GSAP passa por posições
+// intermediárias, e a fusão evita o "degrau" de um frame para o outro em scroll lento.
+export function drawFrame(ctx: CanvasRenderingContext2D, sequence: FrameSequence, frame: number) {
+  const i = Math.floor(frame);
+  const t = frame - i;
+  const a = sequence.get(i);
+  const b = sequence.get(i + 1);
+  if (a && b && t > 0.02) {
+    drawCover(ctx, a);
+    ctx.globalAlpha = t;
+    drawCover(ctx, b);
+    ctx.globalAlpha = 1;
+    return true;
+  }
+  const img = sequence.nearest(Math.round(frame));
+  if (!img) return false;
+  drawCover(ctx, img);
+  return true;
 }

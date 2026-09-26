@@ -41,7 +41,7 @@ export function Header() {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-sm text-fg/75 transition-colors duration-300 hover:text-fg"
+                className="text-sm font-medium text-fg/75 transition-colors duration-300 hover:text-fg"
               >
                 {item.label}
               </a>
@@ -91,7 +91,7 @@ export function Header() {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="border-b border-line py-4 text-3xl font-semibold tracking-tight"
+              className="border-b border-line py-4 font-display text-4xl"
             >
               {item.label}
             </a>

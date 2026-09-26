@@ -49,7 +49,7 @@ export function ServicesBento() {
   return (
     <section id="servicos" className="mx-auto max-w-[1400px] scroll-mt-16 md:scroll-mt-[72px] px-4 pb-24 md:px-10 md:pb-36">
       <Reveal className="max-w-2xl">
-        <h2 className="text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl">{services.title}</h2>
+        <h2 className="font-display text-5xl leading-[1] md:text-6xl">{services.title}</h2>
         <p className="mt-5 max-w-[48ch] leading-relaxed text-muted">{services.subtitle}</p>
       </Reveal>
 
@@ -80,7 +80,7 @@ export function ServicesBento() {
               )}
               <div className="relative">
                 <CellIcon size={28} className="text-accent" aria-hidden />
-                <h3 className="mt-4 text-xl font-semibold tracking-tight md:text-2xl">{item.title}</h3>
+                <h3 className="mt-4 text-xl font-semibold tracking-[-0.01em] md:text-[1.4rem]">{item.title}</h3>
                 <p className="mt-2 max-w-[40ch] text-[15px] leading-relaxed text-fg/70">{item.text}</p>
               </div>
             </Reveal>

@@ -54,8 +54,8 @@ export function SystemsShowcase() {
       <div className="grid gap-10 md:grid-cols-12 md:gap-12 lg:gap-20">
         <div className="md:col-span-5">
           <Reveal>
-            <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent">Sistemas construtivos</p>
-            <h2 className="mt-4 text-4xl font-semibold leading-[1.05] tracking-tight md:text-5xl">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sand">Sistemas construtivos</p>
+            <h2 className="mt-5 font-display text-5xl leading-[1] md:text-6xl">
               Escolha o sistema construtivo da sua obra.
             </h2>
             <p className="mt-5 max-w-[48ch] leading-relaxed text-muted">
@@ -98,7 +98,7 @@ export function SystemsShowcase() {
                       }`}
                       aria-hidden
                     />
-                    <span className="block font-medium md:text-2xl md:tracking-tight">{s.name}</span>
+                    <span className="block font-medium md:font-display md:text-[2rem] md:font-normal md:leading-tight">{s.name}</span>
                     <span className="mt-1 hidden text-sm text-muted md:block">{s.tagline}</span>
                   </button>
                 );
@@ -132,7 +132,7 @@ export function SystemsShowcase() {
               className="mt-8 grid gap-8 lg:grid-cols-2"
             >
               <div>
-                <h3 className="text-2xl font-semibold tracking-tight">{system.name}</h3>
+                <h3 className="font-display text-3xl leading-tight">{system.name}</h3>
                 <p className="mt-3 leading-relaxed text-muted">{system.description}</p>
               </div>
               <ul className="grid gap-3">

@@ -5,14 +5,16 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CtaButton } from "@/components/CtaButton";
-import { FrameSequence, drawCover } from "@/lib/frame-sequence";
+import { FrameSequence, drawFrame } from "@/lib/frame-sequence";
 import { hero, stages } from "@/lib/content";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Gerados por scripts/extract-frames.sh. Desktop: todos os 240 frames do vídeo em 1920x1080.
+// Mobile: 1 a cada 2 frames, já recortados no quadrado central do palco (960x960).
 const FRAME_SETS = {
-  desktop: { path: "/frames/desktop", count: 160 },
-  mobile: { path: "/frames/mobile", count: 96 },
+  desktop: { path: "/frames/desktop", count: 240 },
+  mobile: { path: "/frames/mobile", count: 120 },
 };
 
 // Parte do scroll em que o vídeo roda. Antes: terreno parado com o título. Depois: casa pronta.
@@ -42,9 +44,7 @@ export function ScrollHouse() {
 
     const render = () => {
       rafId = 0;
-      const img = sequence.nearest(Math.round(state.frame));
-      if (!img) return;
-      drawCover(ctx2d, img);
+      drawFrame(ctx2d, sequence, state.frame);
     };
     const scheduleRender = () => {
       if (!rafId) rafId = requestAnimationFrame(render);
@@ -141,8 +141,7 @@ export function ScrollHouse() {
         />
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full motion-reduce:hidden" aria-hidden />
 
-        {/* Scrims para leitura do texto e do header sobre o vídeo. */}
-        {/* Scrims leves e localizados: só onde há texto, para não escurecer a casa. */}
+        {/* Scrims leves e localizados: só onde há texto e header, para não escurecer a casa. */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-bg/55 to-transparent" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-bg to-transparent md:h-[42%] md:from-bg/80 md:via-bg/25" />
         <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-[42%] bg-gradient-to-r from-bg/50 to-transparent md:block" />
@@ -150,15 +149,15 @@ export function ScrollHouse() {
       </div>
 
       {/* Texto */}
-      <div className="relative mx-auto grid w-full max-w-[1400px] flex-1 px-4 pb-8 pt-4 md:absolute md:inset-0 md:grid-cols-12 md:items-end md:px-10 md:pb-16 md:[text-shadow:0_1px_16px_rgb(12_14_16/0.55)] motion-reduce:md:relative motion-reduce:md:pt-40">
+      <div className="relative mx-auto grid w-full max-w-[1400px] flex-1 px-4 pb-8 pt-4 md:absolute md:inset-0 md:grid-cols-12 md:items-end md:px-10 md:pb-16 md:[text-shadow:0_1px_18px_rgb(15_14_12/0.6)] motion-reduce:md:relative motion-reduce:md:pt-40">
         <div className="relative h-full md:col-span-8 md:h-auto">
           <div ref={introRef} className="md:pb-2">
-            <h1 className="text-[1.9rem] font-semibold leading-[1.08] tracking-tight md:text-[2.75rem] lg:text-[3.5rem]">
+            <h1 className="font-display text-[2.6rem] leading-[1] md:text-[3.9rem] lg:text-[4.9rem]">
               {hero.title[0]}
               <br />
-              <span className="text-accent">{hero.title[1]}</span>
+              <em className="text-accent">{hero.title[1]}</em>
             </h1>
-            <p className="mt-4 max-w-[46ch] text-base leading-relaxed text-fg/75 md:mt-6 md:text-lg">
+            <p className="mt-5 max-w-[46ch] text-base leading-relaxed text-fg/80 md:mt-6 md:text-lg">
               {hero.subtitle}
             </p>
             <CtaButton className="mt-6 md:mt-8" />
@@ -173,8 +172,13 @@ export function ScrollHouse() {
                 }}
                 className="invisible absolute inset-x-0 top-0 opacity-0 md:bottom-0 md:top-auto motion-reduce:visible motion-reduce:static motion-reduce:opacity-100"
               >
-                <h2 className="text-3xl font-semibold tracking-tight md:text-5xl motion-reduce:text-xl motion-reduce:md:text-2xl">{stage.title}</h2>
-                <p className="mt-3 max-w-[42ch] text-base leading-relaxed text-fg/75 md:mt-4 md:text-lg">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sand tabular-nums">
+                  {String(i + 1).padStart(2, "0")} / {String(stages.length).padStart(2, "0")}
+                </p>
+                <h2 className="mt-3 font-display text-[2.6rem] leading-[1] md:text-7xl motion-reduce:text-3xl motion-reduce:md:text-4xl">
+                  {stage.title}
+                </h2>
+                <p className="mt-3 max-w-[42ch] text-base leading-relaxed text-fg/80 md:mt-4 md:text-lg">
                   {stage.text}
                 </p>
                 {i === stages.length - 1 && <CtaButton className="mt-6 md:mt-8 motion-reduce:hidden" />}
@@ -191,8 +195,11 @@ export function ScrollHouse() {
               ref={(el) => {
                 markerRefs.current[i] = el;
               }}
-              className="group flex items-center justify-end gap-3 text-sm text-fg/65 transition-colors duration-500 aria-[current=step]:text-fg"
+              className="group flex items-center justify-end gap-3 text-sm font-medium text-fg/60 transition-colors duration-500 aria-[current=step]:text-fg"
             >
+              <span className="tabular-nums text-fg/40 transition-colors duration-500 group-aria-[current=step]:text-sand">
+                {String(i + 1).padStart(2, "0")}
+              </span>
               {stage.title}
               <span className="h-px w-6 bg-fg/30 transition-all duration-500 group-aria-[current=step]:w-12 group-aria-[current=step]:bg-accent" />
             </li>

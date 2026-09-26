@@ -22,20 +22,20 @@ Dials: `DESIGN_VARIANCE 7 / MOTION_INTENSITY 8 / VISUAL_DENSITY 3`.
 
 - Next.js (App Router, TypeScript) + Tailwind v4 (`@tailwindcss/postcss`)
 - GSAP + ScrollTrigger, isolado em componentes client (`"use client"`), com cleanup via `gsap.context().revert()`
-- Fonte: Geist + Geist Mono via pacote `geist`
+- Fontes (next/font/google): Instrument Serif nos títulos (peso 400, itálico para ênfase) + Manrope no texto e na interface
 - Ícones: `@phosphor-icons/react`, stroke/weight padronizado
 - Deploy alvo: Vercel
 - Local: raiz do repositório
 
 ## Assets
 
-Gerados por `scripts/extract-frames.sh` direto em `public/frames/` (ffmpeg). Formato atual: AVIF 4:4:4, 1280x720 nos dois conjuntos (ver comentários no script).
+Gerados por `scripts/extract-frames.sh` direto em `public/frames/` (ffmpeg). Pipeline: decodificação BT.709 explícita, upscale lanczos 1920x1080 + CAS, AVIF 10 bits com cor marcada (ver comentários no script). O canvas funde frames vizinhos durante o scrub.
 
 | Conjunto | Frames | Resolução | Tamanho | Destino no app |
 |---|---|---|---|---|
-| desktop | 160 (16 fps) | 1280x720 AVIF 4:4:4 crf18 | 11 MB | `public/frames/desktop/0001-0160.avif` |
-| mobile | 96 (9,6 fps) | 1280x720 AVIF 4:4:4 crf22 | 5,5 MB | `public/frames/mobile/0001-0096.avif` |
-| posters | `first.jpg`, `final.jpg` | 1280x720 | ~150 KB cada | `public/frames/` |
+| desktop | 240 (24 fps, todos) | 1920x1080 AVIF 4:4:4 10 bits crf26 | 20 MB (progressivo) | `public/frames/desktop/0001-0240.avif` |
+| mobile | 120 (12 fps, 1 a cada 2) | 960x960 recorte central, AVIF 4:2:0 10 bits crf28 | 4,7 MB | `public/frames/mobile/0001-0120.avif` |
+| posters | `first.jpg`, `final.jpg` | 1920x1080 | ~300 KB cada | `public/frames/` (OG 1200x630 em `app/opengraph-image.jpg`) |
 
 Fotos do site atual → `public/images/` (casainicio, projeto1-3, casaeps, casaestrutural, casasteel, logotipo.svg).
 
@@ -74,8 +74,8 @@ Todos os CTAs usam o mesmo rótulo "Solicitar orçamento" e o link `https://wa.m
 
 ## Sistema visual
 
-- Fundo off-black neutro frio (sem `#000`), superfícies em tons de zinc; texto off-white.
-- Único acento: `#4FB5CE` (botões, etapa ativa, links em hover).
+- Fundo grafite quente (`#0f0e0c`, sem `#000`), superfícies em tons de pedra; texto off-white quente (`#f4efe7`). Conversa com o céu de fim de tarde e os materiais do vídeo.
+- Único acento de ação: `#4FB5CE` (botões, etapa ativa, links em hover). Neutro quente de apoio `#d9c4a3` (sand) só em rótulos, números e ênfase de texto, nunca em botão.
 - Raio único: 14px em blocos/imagens, botões em pill. Regra documentada e seguida em todo lugar.
 - Eyebrows: no máximo 1 a cada 3 seções.
 - Zero em-dash/en-dash em texto visível.

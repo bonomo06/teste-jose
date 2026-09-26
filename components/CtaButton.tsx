@@ -17,7 +17,7 @@ export function CtaButton({ size = "md", className = "" }: Props) {
       href={contact.whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center whitespace-nowrap rounded-full bg-accent font-medium text-accent-ink transition-[background-color,transform] duration-300 ease-out-expo hover:bg-accent-strong active:scale-[0.98] ${sizes[size]} ${className}`}
+      className={`inline-flex items-center justify-center whitespace-nowrap rounded-full bg-accent font-semibold text-accent-ink transition-[background-color,transform] duration-300 ease-out-expo hover:bg-accent-strong active:scale-[0.98] ${sizes[size]} ${className}`}
     >
       <WhatsappLogo size={size === "sm" ? 18 : 20} weight="fill" aria-hidden />
       {CTA_LABEL}

@@ -1,16 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Instrument_Serif, Manrope } from "next/font/google";
 import { contact } from "@/lib/content";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Títulos: serifa editorial. Ela só tem peso 400, então nunca usar font-semibold nela.
+const display = Instrument_Serif({
+  variable: "--font-instrument-serif",
+  subsets: ["latin", "latin-ext"],
+  weight: "400",
+  style: ["normal", "italic"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+// Texto e interface: grotesca geométrica, conversa com o wordmark quadrado da marca.
+const sans = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin", "latin-ext"],
 });
 
 const SITE_URL = "https://monobuild.com.br";
@@ -38,7 +42,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0c0e10",
+  themeColor: "#0f0e0c",
   colorScheme: "dark",
 };
 
@@ -63,7 +67,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="pt-BR" className={`${display.variable} ${sans.variable} antialiased`}>
       <body>
         <script
           type="application/ld+json"

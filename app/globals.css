@@ -1,25 +1,31 @@
 @import "tailwindcss";
 
 /*
-  Tema único: escuro (aprovado no spec). Neutros frios + um acento (cor da marca).
+  Tema único: escuro. Neutros em grafite quente (tom da pedra e da madeira do vídeo, que
+  termina ao anoitecer) + um acento frio, o ciano da marca. É o mesmo contraste quente/frio
+  do céu laranja com a casa iluminada, por isso as duas famílias conversam.
+  --color-sand é um neutro quente de apoio (rótulos e números), nunca cor de botão.
+  Tipografia: títulos em serifa editorial (font-display, só peso 400, itálico para ênfase);
+  texto e interface em Manrope (font-sans).
   Raios: blocos e imagens 14px (rounded-block), botões em pill (rounded-full).
   Camadas (z-index): header 40, botão flutuante 30, menu mobile 50.
 */
 @theme {
-  --color-bg: #0c0e10;
-  --color-surface: #14171a;
-  --color-surface-2: #1b1f23;
-  --color-line: rgb(255 255 255 / 0.08);
-  --color-fg: #eef1f3;
-  --color-muted: #9aa4ad;
+  --color-bg: #0f0e0c;
+  --color-surface: #181613;
+  --color-surface-2: #211e1a;
+  --color-line: rgb(244 236 224 / 0.09);
+  --color-fg: #f4efe7;
+  --color-muted: #a8a095;
+  --color-sand: #d9c4a3;
   --color-accent: #4fb5ce;
-  --color-accent-strong: #6cc6dc;
-  --color-accent-ink: #06262e;
+  --color-accent-strong: #74c9dd;
+  --color-accent-ink: #062830;
 
   --radius-block: 14px;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -60,6 +66,15 @@ h3 {
 
 p {
   text-wrap: pretty;
+}
+
+/*
+  A serifa de títulos pede espaçamento levemente fechado. Os tamanhos (text-*) continuam
+  vindo do Tailwind; a altura de linha de cada título fica no próprio componente.
+*/
+.font-display {
+  letter-spacing: -0.01em;
+  font-weight: 400;
 }
 
 /*
