@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/*
+  Tema único: escuro (aprovado no spec). Neutros frios + um acento (cor da marca).
+  Raios: blocos e imagens 14px (rounded-block), botões em pill (rounded-full).
+  Camadas (z-index): header 40, botão flutuante 30, menu mobile 50.
+*/
+@theme {
+  --color-bg: #0c0e10;
+  --color-surface: #14171a;
+  --color-surface-2: #1b1f23;
+  --color-line: rgb(255 255 255 / 0.08);
+  --color-fg: #eef1f3;
+  --color-muted: #9aa4ad;
+  --color-accent: #4fb5ce;
+  --color-accent-strong: #6cc6dc;
+  --color-accent-ink: #06262e;
+
+  --radius-block: 14px;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: var(--color-bg);
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/*
+  Revelação ao entrar na tela (componente Reveal). O HTML do servidor vem visível;
+  só o JS esconde o que está abaixo da dobra, então sem JS nada some.
+*/
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    transition:
+      opacity 0.9s var(--ease-out-expo),
+      transform 0.9s var(--ease-out-expo);
+    transition-delay: calc(var(--reveal-index, 0) * 80ms);
+  }
+
+  [data-reveal="hidden"] {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}

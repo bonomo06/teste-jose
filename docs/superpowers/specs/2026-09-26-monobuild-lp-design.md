@@ -25,16 +25,16 @@ Dials: `DESIGN_VARIANCE 7 / MOTION_INTENSITY 8 / VISUAL_DENSITY 3`.
 - Fonte: Geist + Geist Mono via pacote `geist`
 - Ícones: `@phosphor-icons/react`, stroke/weight padronizado
 - Deploy alvo: Vercel
-- Local: `construtora/monobuild-lp/`
+- Local: raiz do repositório
 
 ## Assets
 
-Gerados por `construtora/scripts/extract-frames.sh` (ffmpeg, já executado):
+Gerados por `scripts/extract-frames.sh` direto em `public/frames/` (ffmpeg). Formato atual: AVIF 4:4:4, 1280x720 nos dois conjuntos (ver comentários no script).
 
 | Conjunto | Frames | Resolução | Tamanho | Destino no app |
 |---|---|---|---|---|
-| desktop | 160 (16 fps) | 1280x720 WebP q72 | 8,9 MB | `public/frames/desktop/0001-0160.webp` |
-| mobile | 96 (9,6 fps) | 854x480 WebP q68 | 3,1 MB | `public/frames/mobile/0001-0096.webp` |
+| desktop | 160 (16 fps) | 1280x720 AVIF 4:4:4 crf18 | 11 MB | `public/frames/desktop/0001-0160.avif` |
+| mobile | 96 (9,6 fps) | 1280x720 AVIF 4:4:4 crf22 | 5,5 MB | `public/frames/mobile/0001-0096.avif` |
 | posters | `first.jpg`, `final.jpg` | 1280x720 | ~150 KB cada | `public/frames/` |
 
 Fotos do site atual → `public/images/` (casainicio, projeto1-3, casaeps, casaestrutural, casasteel, logotipo.svg).

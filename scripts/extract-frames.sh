@@ -9,7 +9,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 SRC="${1:-gemini_generated_video_341642ea.mp4}"
-OUT="${2:-assets/frames}"
+OUT="${2:-public/frames}"
 JOBS="${JOBS:-8}"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
@@ -40,4 +40,5 @@ extract mobile 9.6 22
 # Primeiro e último frame em alta, para o poster do hero e a imagem de compartilhamento
 ffmpeg -v error -y -sseof -0.05 -i "$SRC" -frames:v 1 -q:v 2 "$OUT/final.jpg"
 ffmpeg -v error -y -i "$SRC" -frames:v 1 -q:v 2 "$OUT/first.jpg"
-echo "posters: first.jpg, final.jpg"
+cp "$OUT/final.jpg" app/opengraph-image.jpg
+echo "posters: first.jpg, final.jpg (final também em app/opengraph-image.jpg)"
